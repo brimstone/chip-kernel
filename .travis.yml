@@ -12,6 +12,7 @@ addons:
       - lzop
       - gcc-arm-linux-gnueabihf
       - binutils-arm-linux-gnueabihf
+      - bc
 
 env:
   global:
