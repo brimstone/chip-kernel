@@ -1,5 +1,5 @@
 vmlinuz:
 	cd CHIP-linux; \
-	make -j 4 \
-	&& make modules_install
-
+	make -j 4 deb-pkg
+	find . -iname '*.deb'
+	
