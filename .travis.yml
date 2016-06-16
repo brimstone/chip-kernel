@@ -20,10 +20,8 @@ env:
     - INSTALL_MOD_PATH=/tmp/kernel
 
 script:
-  - copy config-4.3.0-ntc CHIP-linux/.config
-  - cd CHIP-linux
-  - make -j 4 modules_install
-  - cd ..
+  - cp config-4.3.0-ntc CHIP-linux/.config
+  - make -C CHIP-linux -j 4 modules_install
   - cd RTL8723BS
   - for i in debian/patches/0*; do  echo $i; patch -p 1 <$i ; done
   - make -j 4 CONFIG_PLATFORM_ARM_SUNxI=y -C $PWD/../CHIP-linux/ M=$PWD CONFIG_RTL8723BS=m modules_install
