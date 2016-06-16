@@ -1,0 +1,29 @@
+language: c
+
+addons:
+  apt:
+    packages:
+      - git
+      - build-essential
+      - fakeroot
+      - kernel-package
+      - zlib1g-dev
+      - libncurses5-dev
+      - lzop
+      - gcc-arm-linux-gnueabihf
+      - binutils-arm-linux-gnueabihf
+
+env:
+  - ARCH=arm
+  - CROSS_COMPILE=/usr/bin/arm-linux-gnueabihf-
+  - INSTALL_MOD_PATH=/tmp/kernel
+
+script:
+  - copy config-4.3.0-ntc CHIP-linux/.config
+  - cd CHIP-linux
+  - make -j 4 modules_install
+  - cd ..
+  - cd RTL8723BS
+  - for i in debian/patches/0*; do  echo $i; patch -p 1 <$i ; done
+  - make -j 4 CONFIG_PLATFORM_ARM_SUNxI=y -C $PWD/../CHIP-linux/ M=$PWD CONFIG_RTL8723BS=m modules_install
+  - find $INSTALL_MOD_PATH ! -type d
