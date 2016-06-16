@@ -19,6 +19,7 @@ env:
     - ARCH=arm
     - CROSS_COMPILE=/usr/bin/arm-linux-gnueabihf-
     - INSTALL_MOD_PATH=/tmp/kernel
+    - KBUILD_DEBARCH=armhf
 
 script:
   - cp config-4.3.0-ntc CHIP-linux/.config
