@@ -18,14 +18,9 @@ env:
   - CROSS_COMPILE=/usr/bin/arm-linux-gnueabihf-
   - INSTALL_MOD_PATH=/tmp/kernel
   - KBUILD_DEBARCH=armhf
+  - CONFIG_PLATFORM_ARM_SUNxI=y
 script:
-- cp config-4.3.0-ntc CHIP-linux/.config
 - make
-- cd RTL8723BS
-- for i in debian/patches/0*; do  echo $i; patch -p 1 <$i ; done
-- make -j 4 CONFIG_PLATFORM_ARM_SUNxI=y -C $PWD/../CHIP-linux/ M=$PWD CONFIG_RTL8723BS=m
-  modules_install
-- find $INSTALL_MOD_PATH ! -type d
 deploy:
   provider: bintray
   file: ".travis.bintray.json"
