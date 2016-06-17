@@ -1,0 +1,34 @@
+{
+  "package": {
+    "name": "linux-image",
+    "repo": "chip-kernel",
+    "subject": "brimstone",
+    "desc": "I was pushed completely automatically",
+    "website_url": "https://github.com/brimstone/chip-kernel",
+    "vcs_url": "https://github.com/brimstone/chip-kernel.git",
+    "licenses": [
+      "GPLv2"
+    ],
+    "public_download_numbers": false,
+    "public_stats": false
+  },
+  "version": {
+    "name": "0.1",
+    "desc": "This is a version",
+    "released": "2016-06-17",
+    "vcs_tag": "0.1",
+    "gpgSign": false
+  },
+  "files": [
+    {
+      "includePattern": "(.*\\.deb)",
+      "uploadPattern": "$1",
+      "matrixParams": {
+        "deb_distribution": "test",
+        "deb_component": "main",
+        "deb_architecture": "armhf"
+      }
+    }
+  ],
+  "publish": true
+}

@@ -1,30 +1,35 @@
 language: c
-
 addons:
   apt:
     packages:
-      - git
-      - build-essential
-      - fakeroot
-      - kernel-package
-      - zlib1g-dev
-      - libncurses5-dev
-      - lzop
-      - gcc-arm-linux-gnueabihf
-      - binutils-arm-linux-gnueabihf
-      - bc
-
+    - git
+    - build-essential
+    - fakeroot
+    - kernel-package
+    - zlib1g-dev
+    - libncurses5-dev
+    - lzop
+    - gcc-arm-linux-gnueabihf
+    - binutils-arm-linux-gnueabihf
+    - bc
 env:
   global:
-    - ARCH=arm
-    - CROSS_COMPILE=/usr/bin/arm-linux-gnueabihf-
-    - INSTALL_MOD_PATH=/tmp/kernel
-    - KBUILD_DEBARCH=armhf
-
+  - ARCH=arm
+  - CROSS_COMPILE=/usr/bin/arm-linux-gnueabihf-
+  - INSTALL_MOD_PATH=/tmp/kernel
+  - KBUILD_DEBARCH=armhf
 script:
-  - cp config-4.3.0-ntc CHIP-linux/.config
-  - make
-  - cd RTL8723BS
-  - for i in debian/patches/0*; do  echo $i; patch -p 1 <$i ; done
-  - make -j 4 CONFIG_PLATFORM_ARM_SUNxI=y -C $PWD/../CHIP-linux/ M=$PWD CONFIG_RTL8723BS=m modules_install
-  - find $INSTALL_MOD_PATH ! -type d
+- cp config-4.3.0-ntc CHIP-linux/.config
+- make
+- cd RTL8723BS
+- for i in debian/patches/0*; do  echo $i; patch -p 1 <$i ; done
+- make -j 4 CONFIG_PLATFORM_ARM_SUNxI=y -C $PWD/../CHIP-linux/ M=$PWD CONFIG_RTL8723BS=m
+  modules_install
+- find $INSTALL_MOD_PATH ! -type d
+deploy:
+  provider: bintray
+  file: ".travis.bintray.json"
+  user: Bintray user
+bintray:
+  key:
+    secure: mtpM+topy+vdZUlR6WbQhvKiqgfs1f7HcnKUbJNYgSRjK84LiKUdJvAxKUedi8WyQRTBcgQy538hxiogF81xxnTGgN775hb5fFFqc7uWqlgnQ4N24Yy9yHRxkrD03de/qGKrYw1Ed1Jo95n2gVKg+UN91WsoHytnvL38oWoPZe87EoupS3UQsSSa6QBUwrX3JH7o185V2hw3B9JB+S6jFqz6MOUoDX9xWXgT90H4TCeQN0ynV0o+185IzoTLDtK2UZm6zgDAdY1R+qMZcYS93pnn+4FLgD08mnM/fQGSGb+Ms2roNz6oTsmkXpWDQPOiO/sGUCrypooXRMK8aKv4W135l8hh3tD7997A9dGEepKBJQGpeHcn5Snh0V1Y71LhPwWVuRZlX1ywPGQqcmc3JQ7NtPEkazkatBYzvoZPrBbRni59rkS7IX3IwHSPlsw4kgU4+/BQlYq1fOteNw8sNo8CPwOl9i2HcEGPrXgVbj59LzMaomVnvoiwyuHCMMhwyL7xpMneQkemLTEcF1XQz151quDZFrbM77IWGkzfoQvp6FAcAtlcsy2cnZ1Vcx8AIuEa8+Ma5u3xlPZaq47N4OdKROZI34vpzgGZJDD6TXqmFi/b9FVJWc5tWJt+NmhJjlMt+S05+4PxsgPNavfaM8C2hzif2fW8umgWpToPp/E=
