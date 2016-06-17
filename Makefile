@@ -12,3 +12,4 @@ CHIP-linux/RTL8723BS:
 	mv RTL8723BS CHIP-linux; \
 	sed -i '/endif/isource "drivers/net/wireless/RTL8723BS/Kconfig"' \
 		CHIP-linux/drivers/net/wireless/Kconfig
+	cat CHIP-linux/drivers/net/wireless/Kconfig
