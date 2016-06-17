@@ -6,7 +6,7 @@ vmlinuz: CHIP-linux/RTL8723BS
 CHIP-linux/RTL8723BS:
 	cd RTL8723BS; \
 	for i in debian/patches/0*; do \
-		patch -p 1 <$i; \
+		patch -p 1 <$$i; \
 	done; \
 	cd ..; \
 	mv RTL8723BS CHIP-linux; \
