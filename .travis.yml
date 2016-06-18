@@ -21,8 +21,4 @@ env:
   - CONFIG_PLATFORM_ARM_SUNxI=y
 script:
 - make
-deploy:
-  provider: bintray
-  file: ".travis.bintray.json"
-  user: brimstone
-  key: $BINTRAY_API_KEY
+- ./upload

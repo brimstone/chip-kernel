@@ -1,0 +1,42 @@
+#!/bin/bash
+set -euo pipefail
+
+upload(){
+	read package version arch <<<"$(echo bash_4.4~rc1-1_armhf.deb | tr "_" " " | sed 's/.deb//')"
+
+	curl -u brimstone:$BINTRAY_API_KEY \
+	--header "Content-Type: application/json" \
+	-d'{
+		"name": "'"$package"'",
+		"github_repo": "brimstone/chip-kernel",
+		"vcs_url": "https://github.com/brimstone/chip-kernel.git",
+		"licenses": ["GPL-2.0"]
+		}' \
+	https://bintray.com/api/v1/packages/brimstone/chip-kernel
+	echo
+
+	curl -X PUT -T "$1" -u brimstone:$BINTRAY_API_KEY \
+	--header "X-Bintray-Debian-Distribution: wheezy" \
+	--header "X-Bintray-Debian-Component: main" \
+	--header "X-Bintray-Debian-Architecture: $arch" \
+	--header "X-Bintray-Package: $package" \
+	--header "X-Bintray-Version: $version" \
+	--header "X-Bintray-Publish: 1" \
+	"https://bintray.com/api/v1/content/brimstone/chip-kernel/$package/$version/$1"
+
+}
+
+if [ -z "${BINTRAY_API_KEY:-}" ]; then
+	echo "BINTRAY_API_KEY must be set"
+	exit 1
+fi
+
+if [ "$#" = 0 ]; then
+	for f in *.deb; do
+		upload "$f"
+	done
+else
+	for f in "$@"; do
+		upload "$f"
+	done
+fi
