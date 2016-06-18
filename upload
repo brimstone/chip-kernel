@@ -2,7 +2,10 @@
 set -euo pipefail
 
 upload(){
+	echo "Uploading $1"
 	read package version arch <<<"$(echo "$1" | tr "_" " " | sed 's/.deb//')"
+	# strip out silly characters
+	package="${package//+/}"
 
 	curl -u brimstone:$BINTRAY_API_KEY \
 	--header "Content-Type: application/json" \
@@ -23,6 +26,7 @@ upload(){
 	--header "X-Bintray-Version: $version" \
 	--header "X-Bintray-Publish: 1" \
 	"https://bintray.com/api/v1/content/brimstone/chip-kernel/$package/$version/$1"
+	echo
 
 }
 
