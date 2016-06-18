@@ -2,7 +2,7 @@
 set -euo pipefail
 
 upload(){
-	read package version arch <<<"$(echo bash_4.4~rc1-1_armhf.deb | tr "_" " " | sed 's/.deb//')"
+	read package version arch <<<"$(echo "$1" | tr "_" " " | sed 's/.deb//')"
 
 	curl -u brimstone:$BINTRAY_API_KEY \
 	--header "Content-Type: application/json" \
