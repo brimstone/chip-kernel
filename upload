@@ -19,7 +19,7 @@ upload(){
 	echo
 
 	curl -X PUT -T "$1" -u brimstone:$BINTRAY_API_KEY \
-	--header "X-Bintray-Debian-Distribution: wheezy" \
+	--header "X-Bintray-Debian-Distribution: jessie" \
 	--header "X-Bintray-Debian-Component: main" \
 	--header "X-Bintray-Debian-Architecture: $arch" \
 	--header "X-Bintray-Package: $package" \
