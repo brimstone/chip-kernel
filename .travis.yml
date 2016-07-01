@@ -20,5 +20,5 @@ env:
   - KBUILD_DEBARCH=armhf
   - CONFIG_PLATFORM_ARM_SUNxI=y
 script:
-- make
+- make LOCALVERSION=$(date +%Y%m%d%H%M%S)
 - ./upload
